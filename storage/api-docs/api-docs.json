@@ -91,6 +91,51 @@
                 }
             }
         },
+        "/admin/users": {
+            "get": {
+                "tags": [
+                    "Admin Users"
+                ],
+                "summary": "Get all users",
+                "operationId": "6233bcb03e2e7d948c634caf3db224f4",
+                "responses": {
+                    "200": {
+                        "description": "All users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "All users retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -442,6 +487,10 @@
         {
             "name": "Admin Auth",
             "description": "Admin Auth"
+        },
+        {
+            "name": "Admin Users",
+            "description": "Admin Users"
         },
         {
             "name": "Auth",
