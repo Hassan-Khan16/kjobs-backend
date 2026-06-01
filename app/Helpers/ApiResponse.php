@@ -6,74 +6,87 @@ use Illuminate\Http\JsonResponse;
 
 class ApiResponse
 {
-    /**
-     * Success response
-     */
+    private static function response(
+        bool $status,
+        string $message,
+        mixed $data = null,
+        mixed $errors = null,
+        int $code = 200
+    ): JsonResponse {
+        return response()->json([
+            'status' => $status,
+            'message' => $message,
+            'data' => $status ? $data : null,
+            'errors' => $status ? null : $errors,
+        ], $code);
+    }
+
     public static function success(
         mixed $data = null,
         string $message = 'Success',
-        int $status = 200
+        int $code = 200
     ): JsonResponse {
-        return response()->json([
-            'status' => true,
-            'message' => $message,
-            'data' => $data,
-        ], $status);
+        return self::response(
+            true,
+            $message,
+            $data,
+            null,
+            $code
+        );
     }
 
-    /**
-     * Error response
-     */
     public static function error(
         string $message = 'Error',
-        int $status = 400,
-        mixed $errors = null
+        mixed $errors = null,
+        int $code = 400
     ): JsonResponse {
-        return response()->json([
-            'status' => false,
-            'message' => $message,
-            'errors' => $errors,
-        ], $status);
+        return self::response(
+            false,
+            $message,
+            null,
+            $errors,
+            $code
+        );
     }
 
-    /**
-     * Unauthorized response
-     */
     public static function unauthorized(
         string $message = 'Unauthorized'
     ): JsonResponse {
-        return self::error($message, 401);
+        return self::error(
+            $message,
+            null,
+            401
+        );
     }
 
-    /**
-     * Forbidden response
-     */
     public static function forbidden(
         string $message = 'Forbidden'
     ): JsonResponse {
-        return self::error($message, 403);
+        return self::error(
+            $message,
+            null,
+            403
+        );
     }
 
-    /**
-     * Not found response
-     */
     public static function notFound(
         string $message = 'Not Found'
     ): JsonResponse {
-        return self::error($message, 404);
+        return self::error(
+            $message,
+            null,
+            404
+        );
     }
 
-    /**
-     * Validation error response
-     */
     public static function validation(
         mixed $errors,
         string $message = 'Validation Error'
     ): JsonResponse {
-        return response()->json([
-            'status' => false,
-            'message' => $message,
-            'errors' => $errors,
-        ], 422);
+        return self::error(
+            $message,
+            $errors,
+            422
+        );
     }
 }
