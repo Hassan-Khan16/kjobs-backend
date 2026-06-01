@@ -11,6 +11,11 @@ class LoginRequest extends FormRequest
         return true;
     }
 
+    public function expectsJson(): bool
+    {
+        return true;
+    }
+
     /**
      * @return array<string, mixed>
      */

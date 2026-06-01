@@ -8,8 +8,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -18,7 +18,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->validated('email'))->first();
 
         if (! $user) {
-            return ApiResponse::notFound('User not found.');
+            return ApiResponse::notFound('Invalid credentials.');
         }
 
         if (! $user->isAdmin()) {
@@ -26,9 +26,7 @@ class AuthController extends Controller
         }
 
         if (! Hash::check($request->validated('password'), $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['These credentials do not match our records.'],
-            ]);
+            return ApiResponse::unauthorized('These credentials do not match our records.');
         }
 
         if (! $user->is_active) {
@@ -42,5 +40,32 @@ class AuthController extends Controller
             'token' => $token,
             'token_type' => 'Bearer',
         ], 'Login successful');
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if (! $user || ! $user->isAdmin()) {
+            return ApiResponse::unauthorized('Admin access required.');
+        }
+
+        $user->currentAccessToken()?->delete();
+
+        return ApiResponse::success(null, 'Logged out successfully.');
+    }
+
+    public function me(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if (! $user || ! $user->isAdmin()) {
+            return ApiResponse::unauthorized('Admin access required.');
+        }
+
+        return ApiResponse::success(
+            (new UserResource($user))->resolve(),
+            'Admin retrieved successfully',
+        );
     }
 }
