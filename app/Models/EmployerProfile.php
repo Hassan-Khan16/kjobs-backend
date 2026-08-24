@@ -12,6 +12,8 @@ class EmployerProfile extends Model
     protected $fillable = [
         'user_id',
         'company_name',
+        'contact_person_name',
+        'phone',
         'company_description',
         'website',
         'logo',
