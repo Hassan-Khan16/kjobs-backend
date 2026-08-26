@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index(ListPaginatedUserRequest $request)
     {
         $users = User::query()
-            ->where('role', '!=', 'admin')
+            ->where('role', 'user')
             ->when(
                 $request->search,
                 fn ($q) =>

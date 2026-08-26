@@ -21,8 +21,11 @@ Route::prefix('auth/employer')->group(function () {
     Route::post('/login', [EmployerAuthController::class, 'login']);
 });
 
-Route::post('/admin/login', [AdminAuthController::class, 'login']);
-Route::get('/admin/users', [AdminUserController::class, 'index']);
+
+Route::prefix('admin')->group(function () {
+    Route::post('/login', [AdminAuthController::class, 'login']);
+    Route::get('/users', [AdminUserController::class, 'index']);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
