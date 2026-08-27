@@ -22,10 +22,7 @@ Route::prefix('auth/employer')->group(function () {
 });
 
 
-Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
-    Route::post('/login', [AdminAuthController::class, 'login']);
-    Route::get('/users', [AdminUserController::class, 'index']);
-});
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
@@ -36,6 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [AuthSessionController::class, 'logout']);
     });
 
-    Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
-    Route::get('/admin/me', [AdminAuthController::class, 'me']);
+    Route::prefix('admin')->group(function () {
+        Route::post('/logout', [AdminAuthController::class, 'logout']);
+        Route::get('/me', [AdminAuthController::class, 'me']);
+        Route::get('/users', [AdminUserController::class, 'index']);
+    });
 });
