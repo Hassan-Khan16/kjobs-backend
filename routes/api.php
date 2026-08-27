@@ -22,7 +22,7 @@ Route::prefix('auth/employer')->group(function () {
 });
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'login']);
     Route::get('/users', [AdminUserController::class, 'index']);
 });
