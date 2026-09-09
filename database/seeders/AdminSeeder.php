@@ -9,6 +9,7 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
+        // testing
         User::updateOrCreate(
             ['email' => 'admin@kjobs.com','role' => 'admin'],
             [
