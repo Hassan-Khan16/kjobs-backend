@@ -22,7 +22,7 @@ class RegisterRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::defaults()],
-            'role' => ['required', Rule::in(['user', 'employer'])],
+            'role' => ['required', Rule::in(['job-seeker', 'employer'])],
         ];
     }
 }

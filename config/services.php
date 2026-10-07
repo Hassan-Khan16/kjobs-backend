@@ -2,6 +2,10 @@
 
 return [
 
+    'accounts' => [
+        'default_password' => env('DEFAULT_ACCOUNT_PASSWORD', 'Password@123'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

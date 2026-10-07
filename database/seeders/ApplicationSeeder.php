@@ -15,7 +15,7 @@ class ApplicationSeeder extends Seeder
     public function run(): void
     {
         $jobSeeker = User::where('email', 'alex.wilson@kjobs.com')
-            ->where('role', 'user')
+            ->where('role', 'job-seeker')
             ->whereHas('jobSeeker')
             ->firstOrFail();
         $employerProfile = User::where('email', 'john@techcorp.com')

@@ -14,6 +14,7 @@ use App\Models\EmployerProfile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class EmployerController extends Controller
 {
@@ -67,11 +68,12 @@ class EmployerController extends Controller
 
     public function store(StoreEmployerRequest $request)
     {
-        return DB::transaction(function () use ($request) {
+        $password = config('services.accounts.default_password');
+        $employer = DB::transaction(function () use ($request, $password) {
             $user = User::create([
                 'name' => $request->contact_person_name,
                 'email' => $request->email,
-                'password' => bcrypt($request->password),
+                'password' => $password,
                 'role' => 'employer',
                 'is_active' => true,
             ]);
@@ -86,11 +88,19 @@ class EmployerController extends Controller
                 'logo' => $request->logo,
             ]);
 
-            return ApiResponse::success(
-                new EmployerResource($employer->load('user')),
-                'Employer created successfully'
-            );
+            return $employer->load('user');
         });
+
+        Mail::raw(
+            "Your KJobs employer account is ready. Your temporary password is: {$password}",
+            fn ($message) => $message->to($employer->user->email)->subject('Your KJobs employer account'),
+        );
+
+        return ApiResponse::success(
+            new EmployerResource($employer),
+            'Employer created successfully',
+            201,
+        );
     }
 
     public function update(UpdateEmployerRequest $request, $id)

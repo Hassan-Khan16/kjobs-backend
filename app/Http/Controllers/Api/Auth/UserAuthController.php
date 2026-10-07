@@ -20,7 +20,7 @@ class UserAuthController extends Controller
             'name' => $request->validated('name'),
             'email' => $request->validated('email'),
             'password' => $request->validated('password'),
-            'role' => 'user',
+            'role' => 'job-seeker',
             'is_active' => true,
         ]);
 
@@ -31,7 +31,7 @@ class UserAuthController extends Controller
     {
         $user = User::where('email', $request->validated('email'))->first();
 
-        if (! $user || ! $user->isUser()) {
+        if (! $user || ! $user->isJobSeeker()) {
             throw ValidationException::withMessages([
                 'email' => ['These credentials do not match our records.'],
             ]);

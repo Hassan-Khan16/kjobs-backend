@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\Admin\EmployerController as AdminEmployerController;
+use App\Http\Controllers\Api\Admin\JobListingController as AdminJobListingController;
+use App\Http\Controllers\Api\Admin\JobSeekerController as AdminJobSeekerController;
 use App\Http\Controllers\Api\Auth\AuthSessionController;
 use App\Http\Controllers\Api\Auth\EmployerAuthController;
 use App\Http\Controllers\Api\Auth\UserAuthController;
@@ -37,7 +38,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout']);
         Route::get('/me', [AdminAuthController::class, 'me']);
-        Route::get('/job-seekers', [AdminUserController::class, 'index']);
+        Route::post('/job-seekers', [AdminJobSeekerController::class, 'store']);
+        Route::get('/job-seekers', [AdminJobSeekerController::class, 'index']);
+        Route::get('/job-seekers/{id}', [AdminJobSeekerController::class, 'show']);
+        Route::put('/job-seekers/{id}', [AdminJobSeekerController::class, 'update']);
+        Route::patch('/job-seekers/{id}/password', [AdminJobSeekerController::class, 'updatePassword']);
+        Route::patch('/job-seekers/{id}/status', [AdminJobSeekerController::class, 'toggleStatus']);
+
+        Route::get('/job-listings', [AdminJobListingController::class, 'index']);
+        Route::get('/job-listings/{id}', [AdminJobListingController::class, 'show']);
 
         Route::prefix('employers')->group(function () {
             Route::get('/', [AdminEmployerController::class, 'index']);

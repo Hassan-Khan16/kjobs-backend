@@ -356,9 +356,9 @@
                                     },
                                     "role": {
                                         "type": "string",
-                                        "example": "user",
+                                        "example": "job-seeker",
                                         "enum": [
-                                            "user",
+                                            "job-seeker",
                                             "employer"
                                         ]
                                     }
@@ -532,11 +532,11 @@
                     },
                     "role": {
                         "type": "string",
-                        "example": "user",
+                        "example": "job-seeker",
                         "enum": [
                             "admin",
                             "employer",
-                            "user"
+                            "job-seeker"
                         ]
                     },
                     "is_active": {

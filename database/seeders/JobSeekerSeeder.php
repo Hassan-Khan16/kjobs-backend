@@ -54,7 +54,7 @@ class JobSeekerSeeder extends Seeder
                 [
                     'name' => $jobSeekerData['user']['name'],
                     'password' => 'Password',
-                    'role' => 'user',
+                    'role' => 'job-seeker',
                     'is_active' => true,
                 ],
             );

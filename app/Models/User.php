@@ -88,8 +88,8 @@ class User extends Authenticatable
         return $this->role === 'employer';
     }
 
-    public function isUser(): bool
+    public function isJobSeeker(): bool
     {
-        return $this->role === 'user';
+        return $this->role === 'job-seeker';
     }
 }

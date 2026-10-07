@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class StoreEmployerRequest extends FormRequest
 {
@@ -16,7 +15,6 @@ class StoreEmployerRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::defaults()],
             'company_name' => ['required', 'string', 'max:255'],
             'contact_person_name' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],

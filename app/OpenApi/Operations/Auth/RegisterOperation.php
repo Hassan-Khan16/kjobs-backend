@@ -17,7 +17,7 @@ use OpenApi\Attributes as OA;
                 new OA\Property(property: 'email', type: 'string', format: 'email', example: 'jane@example.com'),
                 new OA\Property(property: 'password', type: 'string', format: 'password', example: 'password123'),
                 new OA\Property(property: 'password_confirmation', type: 'string', format: 'password', example: 'password123'),
-                new OA\Property(property: 'role', type: 'string', enum: ['user', 'employer'], example: 'user'),
+                new OA\Property(property: 'role', type: 'string', enum: ['job-seeker', 'employer'], example: 'job-seeker'),
             ],
         ),
     ),
