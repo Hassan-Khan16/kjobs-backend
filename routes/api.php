@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Api\Admin\EmployerController as AdminEmployerController;
 use App\Http\Controllers\Api\Auth\AuthSessionController;
 use App\Http\Controllers\Api\Auth\EmployerAuthController;
 use App\Http\Controllers\Api\Auth\UserAuthController;
@@ -37,5 +38,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout']);
         Route::get('/me', [AdminAuthController::class, 'me']);
         Route::get('/users', [AdminUserController::class, 'index']);
+
+        Route::prefix('employers')->group(function () {
+            Route::get('/', [AdminEmployerController::class, 'index']);
+            Route::post('/', [AdminEmployerController::class, 'store']);
+            Route::get('/{id}', [AdminEmployerController::class, 'show']);
+            Route::put('/{id}', [AdminEmployerController::class, 'update']);
+            Route::delete('/{id}', [AdminEmployerController::class, 'destroy']);
+            Route::patch('/{id}/status', [AdminEmployerController::class, 'toggleStatus']);
+        });
     });
 });
