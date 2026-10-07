@@ -5,9 +5,9 @@ namespace App\OpenApi\Operations\Admin\User;
 use OpenApi\Attributes as OA;
 
 #[OA\Get(
-    path: '/admin/users',
-    summary: 'Get users',
-    tags: ['Admin Users'],
+    path: '/admin/job-seekers',
+    summary: 'Get job seekers',
+    tags: ['Admin Job Seekers'],
     security: [['sanctum' => []]],
 
     parameters: [
@@ -41,7 +41,7 @@ use OpenApi\Attributes as OA;
             name: 'search',
             in: 'query',
             required: false,
-            description: 'Search by user name or email',
+            description: 'Search by job seeker name or email',
             schema: new OA\Schema(
                 type: 'string',
                 maxLength: 200,
@@ -53,7 +53,7 @@ use OpenApi\Attributes as OA;
             name: 'status',
             in: 'query',
             required: false,
-            description: 'Filter users by status',
+            description: 'Filter job seekers by status',
             schema: new OA\Schema(
                 type: 'string',
                 enum: [
@@ -69,7 +69,7 @@ use OpenApi\Attributes as OA;
 
         new OA\Response(
             response: 200,
-            description: 'Users retrieved successfully',
+            description: 'Job seekers retrieved successfully',
 
             content: new OA\JsonContent(
 
@@ -84,7 +84,7 @@ use OpenApi\Attributes as OA;
                     new OA\Property(
                         property: 'message',
                         type: 'string',
-                        example: 'Users retrieved successfully'
+                        example: 'Job seekers retrieved successfully'
                     ),
 
                     new OA\Property(

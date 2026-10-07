@@ -91,13 +91,13 @@
                 }
             }
         },
-        "/admin/users": {
+        "/admin/job-seekers": {
             "get": {
                 "tags": [
-                    "Admin Users"
+                    "Admin Job Seekers"
                 ],
-                "summary": "Get users",
-                "operationId": "6233bcb03e2e7d948c634caf3db224f4",
+                "summary": "Get job seekers",
+                "operationId": "1fd8232576608d7defef1363e28d0474",
                 "parameters": [
                     {
                         "name": "page",
@@ -125,7 +125,7 @@
                     {
                         "name": "search",
                         "in": "query",
-                        "description": "Search by user name or email",
+                        "description": "Search by job seeker name or email",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -136,7 +136,7 @@
                     {
                         "name": "status",
                         "in": "query",
-                        "description": "Filter users by status",
+                        "description": "Filter job seekers by status",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -150,7 +150,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Users retrieved successfully",
+                        "description": "Job seekers retrieved successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -161,7 +161,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Users retrieved successfully"
+                                            "example": "Job seekers retrieved successfully"
                                         },
                                         "data": {
                                             "properties": {
@@ -569,8 +569,8 @@
             "description": "Admin Auth"
         },
         {
-            "name": "Admin Users",
-            "description": "Admin Users"
+            "name": "Admin Job Seekers",
+            "description": "Admin Job Seekers"
         },
         {
             "name": "Auth",

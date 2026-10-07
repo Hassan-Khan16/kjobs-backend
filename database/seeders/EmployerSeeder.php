@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\EmployerProfile;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -47,23 +46,27 @@ class EmployerSeeder extends Seeder
         ];
 
         foreach ($employers as $employerData) {
-            $user = User::create([
-                'name' => $employerData['name'],
-                'email' => $employerData['email'],
-                'password' => $employerData['password'],
-                'role' => 'employer',
-                'is_active' => true,
-            ]);
+            $user = User::updateOrCreate(
+                ['email' => $employerData['email']],
+                [
+                    'name' => $employerData['name'],
+                    'password' => $employerData['password'],
+                    'role' => 'employer',
+                    'is_active' => true,
+                ],
+            );
 
-            EmployerProfile::create([
-                'user_id' => $user->id,
-                'company_name' => $employerData['company_name'],
-                'contact_person_name' => $employerData['contact_person_name'],
-                'phone' => $employerData['phone'],
-                'company_description' => $employerData['company_description'],
-                'website' => $employerData['website'],
-                'logo' => $employerData['logo'],
-            ]);
+            $user->employerProfile()->updateOrCreate(
+                [],
+                [
+                    'company_name' => $employerData['company_name'],
+                    'contact_person_name' => $employerData['contact_person_name'],
+                    'phone' => $employerData['phone'],
+                    'company_description' => $employerData['company_description'],
+                    'website' => $employerData['website'],
+                    'logo' => $employerData['logo'],
+                ],
+            );
         }
     }
 }

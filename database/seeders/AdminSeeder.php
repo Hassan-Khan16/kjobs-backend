@@ -11,10 +11,11 @@ class AdminSeeder extends Seeder
     {
         // testing
         User::updateOrCreate(
-            ['email' => 'admin@kjobs.com','role' => 'admin'],
+            ['email' => 'admin@kjobs.com'],
             [
-                'name' =>  'Admin',
-                'password' =>  'Password',
+                'name' => 'Admin',
+                'password' => 'Password',
+                'role' => 'admin',
                 'is_active' => true,
             ],
         );

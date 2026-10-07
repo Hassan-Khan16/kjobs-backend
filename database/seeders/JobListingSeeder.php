@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\JobListing;
 use Illuminate\Database\Seeder;
 
@@ -9,6 +10,11 @@ class JobListingSeeder extends Seeder
 {
     public function run(): void
     {
+        $employerProfile = User::where('email', 'john@techcorp.com')
+            ->where('role', 'employer')
+            ->firstOrFail()
+            ->employerProfile;
+
         $listings = [
             [
                 'title' => 'Senior Laravel Developer',
@@ -46,12 +52,13 @@ class JobListingSeeder extends Seeder
         ];
 
         foreach ($listings as $listing) {
+            $attributes = [
+                'employer_profile_id' => $employerProfile->id,
+                'title' => $listing['title'],
+            ];
             JobListing::updateOrCreate(
-                [
-                    'employer_profile_id' => 1,
-                    'title' => $listing['title'],
-                ],
-                $listing,
+                $attributes,
+                [...$attributes, ...$listing],
             );
         }
     }

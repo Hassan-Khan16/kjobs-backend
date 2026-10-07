@@ -37,13 +37,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout']);
         Route::get('/me', [AdminAuthController::class, 'me']);
-        Route::get('/users', [AdminUserController::class, 'index']);
+        Route::get('/job-seekers', [AdminUserController::class, 'index']);
 
         Route::prefix('employers')->group(function () {
             Route::get('/', [AdminEmployerController::class, 'index']);
             Route::post('/', [AdminEmployerController::class, 'store']);
             Route::get('/{id}', [AdminEmployerController::class, 'show']);
             Route::put('/{id}', [AdminEmployerController::class, 'update']);
+            Route::patch('/{id}/password', [AdminEmployerController::class, 'updatePassword']);
             Route::delete('/{id}', [AdminEmployerController::class, 'destroy']);
             Route::patch('/{id}/status', [AdminEmployerController::class, 'toggleStatus']);
         });

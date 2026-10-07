@@ -62,7 +62,7 @@ class UserController extends Controller
                 $users,
                 UserResource::class
             ),
-            'Users retrieved successfully'
+            'Job seekers retrieved successfully'
         );
     }
 }

@@ -7,6 +7,7 @@ use App\Helpers\ApiResponse;
 use App\Http\Requests\Admin\ListPaginatedEmployerRequest;
 use App\Http\Requests\Admin\StoreEmployerRequest;
 use App\Http\Requests\Admin\UpdateEmployerRequest;
+use App\Http\Requests\Admin\UpdateEmployerPasswordRequest;
 use App\Http\Resources\EmployerResource;
 use App\Http\Resources\PaginatedResource;
 use App\Models\EmployerProfile;
@@ -101,9 +102,6 @@ class EmployerController extends Controller
             if ($request->has('email')) {
                 $employer->user->update(['email' => $request->email]);
             }
-            if ($request->has('password')) {
-                $employer->user->update(['password' => bcrypt($request->password)]);
-            }
             if ($request->has('contact_person_name')) {
                 $employer->user->update(['name' => $request->contact_person_name]);
             }
@@ -123,6 +121,19 @@ class EmployerController extends Controller
                 'Employer updated successfully'
             );
         });
+    }
+
+    public function updatePassword(UpdateEmployerPasswordRequest $request, $id)
+    {
+        $employer = EmployerProfile::with('user')->findOrFail($id);
+        $employer->user->update([
+            'password' => $request->validated('password'),
+        ]);
+
+        return ApiResponse::success(
+            null,
+            'Employer password updated successfully'
+        );
     }
 
     public function destroy($id)

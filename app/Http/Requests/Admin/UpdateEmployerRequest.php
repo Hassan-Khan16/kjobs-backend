@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class UpdateEmployerRequest extends FormRequest
 {
@@ -18,7 +17,6 @@ class UpdateEmployerRequest extends FormRequest
 
         return [
             'email' => ['sometimes', 'email', 'unique:users,email,' . $employerId],
-            'password' => ['sometimes', 'confirmed', Password::defaults()],
             'company_name' => ['sometimes', 'string', 'max:255'],
             'contact_person_name' => ['sometimes', 'string', 'max:255'],
             'phone' => ['sometimes', 'nullable', 'string', 'max:20'],
